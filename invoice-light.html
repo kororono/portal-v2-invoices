@@ -4,7 +4,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice - Nairoreel Productions</title>
-    <link rel="stylesheet" href="invoice-light.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            padding: 15mm 20mm;
+        }
+
+        .invoice-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Header Section */
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .invoice-title-section {
+            text-align: right;
+        }
+
+        .invoice-title {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #EA1821;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .invoice-number,
+        .invoice-date {
+            font-size: 13px;
+            font-weight: 400;
+            color: #666666;
+            margin-bottom: 3px;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 15px 0;
+        }
+
+        /* Billing Section */
+        .billing-section {
+            margin-bottom: 15px;
+        }
+
+        .billing-section h3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .client-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #000000;
+        }
+
+        .client-address,
+        .client-email {
+            font-size: 13px;
+            color: #333333;
+            margin-bottom: 3px;
+        }
+
+        /* Invoice Table */
+        .invoice-table {
+            margin-bottom: 15px;
+        }
+
+        .invoice-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-table thead tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .invoice-table th {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 10px 15px;
+            text-align: left;
+            color: #000000;
+        }
+
+        .invoice-table th.amount-column {
+            text-align: right;
+        }
+
+        .invoice-table tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .invoice-table td {
+            padding: 12px 15px;
+            font-size: 14px;
+            vertical-align: top;
+            color: #000000;
+        }
+
+        .invoice-table .desc-column {
+            width: 65%;
+        }
+
+        .invoice-table .amount-column {
+            text-align: right;
+            font-weight: 500;
+            width: 35%;
+        }
+
+        .item-detail {
+            display: block;
+            font-size: 12px;
+            color: #666666;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* Totals Section */
+        .totals-section {
+            margin-left: auto;
+            width: 50%;
+            margin-bottom: 15px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        .total-label {
+            font-weight: 400;
+            color: #333333;
+        }
+
+        .total-value {
+            font-weight: 500;
+            color: #000000;
+        }
+
+        .final-total {
+            border-top: 2px solid #e0e0e0;
+            margin-top: 10px;
+            padding-top: 12px;
+        }
+
+        .final-total .total-label {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #000000;
+        }
+
+        .final-total .total-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            margin-bottom: 15px;
+        }
+
+        .payment-section h3 {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .payment-info {
+            margin-bottom: 10px;
+        }
+
+        .payment-method {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #000000;
+        }
+
+        .payment-detail {
+            font-size: 13px;
+            color: #333333;
+            margin-bottom: 4px;
+        }
+
+        .payment-note {
+            font-size: 11px;
+            color: #666666;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .thank-you {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #000000;
+        }
+
+        .contact-info {
+            font-size: 12px;
+            color: #666666;
+        }
+    </style>
 </head>
 <body>
     <div class="invoice-container">
