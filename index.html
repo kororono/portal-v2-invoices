@@ -3,345 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - Nairoreel Productions</title>
+    <title>Nairoreel Productions - Invoice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Montserrat:wght@400;500;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- 1. VARIABLE INDEX (Edit here to change styling) --- */
+        :root {
+            /* Fonts */
+            --font-primary: 'Bodoni Moda', serif;
+            --font-body: 'Open Sans', Arial, sans-serif;
+            --font-label: 'Montserrat', sans-serif;
+
+            /* Colors */
+            --text-main: #e5e5e5;
+            --text-muted: #999999;
+            --label-color: #828282;
+            --border-heavy: #ffffff;
+            --border-light: #333333;
+            --table-row-border: #252525;
+            --bg-screen: #121212;
         }
 
+        /* --- 2. RECOMMENDED A4 SETUP --- */
         @page {
             size: A4;
             margin: 0;
         }
-
+        
         body {
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            background-color: #000000;
-            color: #ffffff;
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-screen);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .a4-page {
             width: 210mm;
             height: 297mm;
-            margin: 0 auto;
-            padding: 15mm 20mm;
+            background: black;
+            box-sizing: border-box;
+            padding: 20mm 20mm 12mm 20mm; /* Narrow bottom margin to push footer down */
+            margin: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column; 
+            justify-content: space-between; 
         }
 
-        .invoice-container {
-            width: 100%;
-            height: 100%;
+        @media screen {
+            .a4-page {
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
         }
 
-        /* Header Section */
-        .invoice-header {
+        @media print {
+            body { background-color: black; margin: 0; }
+            .a4-page { box-shadow: none; margin: 0; page-break-after: always; height: 297mm; }
+        }
+
+        /* --- 3. TYPOGRAPHY & UTILS --- */
+        h1, h2, h3, p { margin: 0; }
+        
+        .label {
+            font-family: var(--font-label);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--label-color);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* --- 4. HEADER SECTION --- */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 70px;
         }
 
-        .logo {
-            height: 200px;
-            width: auto;
-        }
-
-        .invoice-title-section {
-            text-align: right;
+        .logo-placeholder {
+            width: 100px;
+            height: 80px;
+            border: 1px dashed #e0e0e0;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #bbb;
         }
 
         .invoice-title {
-            font-size: 100px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #EA1821;
-            margin-bottom: 5px;
-            line-height: 1;
-        }
-
-        .invoice-number,
-        .invoice-date {
-            font-size: 13px;
+            font-family: var(--font-primary);
+            font-size: 80px;
             font-weight: 400;
-            color: #888888;
-            margin-bottom: 3px;
+            letter-spacing: 2px;
+            color: var(--border-heavy);
+            margin-top: -20px;
         }
 
-        /* Divider */
-        .divider {
-            height: 1px;
-            background-color: #333333;
-            margin: 15px 0;
+        /* --- 5. BILLING GRID --- */
+        .billing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 40px;
         }
 
-        /* Billing Section */
-        .billing-section {
-            margin-bottom: 15px;
-        }
-
-        .billing-section h3 {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .client-name {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .client-address,
-        .client-email {
+        .bill-to p, .invoice-meta p {
             font-size: 13px;
-            color: #cccccc;
-            margin-bottom: 3px;
+            line-height: 1.8;
         }
 
-        /* Invoice Table */
-        .invoice-table {
-            margin-bottom: 15px;
-        }
+        .invoice-meta { text-align: right; }
 
-        .invoice-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        /* --- 6. TABLE SECTION --- */
+        .table-container { margin-bottom: 30px; }
 
-        .invoice-table thead tr {
-            border-bottom: 1px solid #333333;
-        }
+        .invoice-table { width: 100%; border-collapse: collapse; }
 
         .invoice-table th {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 10px 15px;
+            font-family: var(--font-label);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--label-color);
             text-align: left;
-            color: #ffffff;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-heavy);
         }
 
-        .invoice-table th.amount-column {
-            text-align: right;
-        }
-
-        .invoice-table tbody tr {
-            border-bottom: 1px solid #222222;
-        }
+        .invoice-table th:last-child { text-align: right; }
 
         .invoice-table td {
-            padding: 12px 15px;
-            font-size: 14px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--table-row-border);
             vertical-align: top;
         }
 
-        /*.invoice-table .desc-column {
-            width: 65%;
-        }*/
-
-        .invoice-table .amount-column {
-            text-align: right;
-            font-weight: 500;
-            width: 35%;
+        .item-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .item-detail {
-            display: block;
+        .item-desc {
             font-size: 12px;
-            color: #888888;
-            margin-top: 5px;
-            font-weight: 400;
+            color: var(--text-muted);
+            font-weight: 300;
         }
 
-        /* Totals Section */
-        .totals-section {
-            margin-left: auto;
-            width: 50%;
-            margin-bottom: 15px;
+        .item-price {
+            font-size: 13px;
+            text-align: right;
         }
+
+        /* --- 7. TOTALS SECTION --- */
+        .totals-section { display: flex; justify-content: flex-end; margin-top: 10px; color: var(--text-muted);}
+        .totals-table { width: 250px; }
 
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 15px;
-            font-size: 14px;
+            padding: 8px 0;
+            font-family: var(--font-label);
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
-        .total-label {
-            font-weight: 400;
-            color: #cccccc;
-        }
-
-        .total-value {
-            font-weight: 500;
-        }
-
-        .final-total {
-            border-top: 2px solid #333333;
+        .total-row.final {
+            border-top: 1px solid var(--border-heavy);
             margin-top: 10px;
-            padding-top: 12px;
-        }
-
-        .final-total .total-label {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #ffffff;
-        }
-
-        .final-total .total-value {
+            padding-top: 15px;
             font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        /* Payment Section */
-        .payment-section {
-            margin-bottom: 15px;
-        }
-
-        .payment-section h3 {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .payment-info {
-            margin-bottom: 10px;
-        }
-
-        .payment-method {
-            font-size: 14px;
+            color: var(--border-heavy);
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #ffffff;
+            align-items: center;
         }
 
-        .payment-detail {
-            font-size: 13px;
-            color: #cccccc;
-            margin-bottom: 4px;
+        .total-row.final .amount {
+            font-family: var(--font-primary);
+            font-size: 20px;
+        }
+
+        /* --- 8. BOTTOM SECTION --- */
+        .bottom-section { margin-top: auto; }
+
+        .payment-info { margin-bottom: 30px; font-size: 15px; }
+
+        .bank-details p {
+            font-size: 11px;
+            line-height: 1.9;
+            color: var(--text-main);
         }
 
         .payment-note {
-            font-size: 11px;
-            color: #888888;
+            font-size: 10px;
+            color: var(--label-color);
             font-style: italic;
-            line-height: 1.5;
-        }
-
-        /* Footer Section */
-        .footer-section {
-            text-align: center;
             margin-top: 15px;
         }
 
-        .thank-you {
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 5px;
-            color: #ffffff;
+        .footer {
+            border-top: 1px solid var(--border-light);
+            padding-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .contact-info {
-            font-size: 12px;
-            color: #888888;
+        .thank-you {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .footer-contact {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
-    <div class="invoice-container">
-        <!-- Header Section -->
-        <div class="invoice-header">
-            <div class="logo-section">
-                <img src="light-nr-logo.png" alt="Nairoreel Productions" class="logo">
-            </div>
-            <div class="invoice-title-section">
+
+    <div class="a4-page">
+        <div class="top-content">
+            <header class="header">
+                <div class="logo">
+                    <div class="logo-placeholder">LOGO</div>
+                </div>
                 <h1 class="invoice-title">INVOICE</h1>
-                <p class="invoice-number">NO. 000001</p>
-                <p class="invoice-date">02/06/2030</p>
+            </header>
+
+            <section class="billing-grid">
+                <div class="bill-to">
+                    <span class="label">Billed To</span>
+                    <p>
+                        <strong>Studio Shodwe</strong><br>
+                        123 Anywhere St., Any City<br>
+                        hello@reallygreatsite.com
+                    </p>
+                </div>
+                <div class="invoice-meta">
+                    <span class="label">Invoice Details</span>
+                    <p>
+                        # INV-12345<br>
+                        April 16, 2025
+                    </p>
+                </div>
+            </section>
+
+            <section class="table-container">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="item-title">Corporate Video Production</div>
+                                <div class="item-desc">3D Animation and Post-Production</div>
+                            </td>
+                            <td class="item-price">$5,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item-title">3D Product Rendering</div>
+                                <div class="item-desc">40 render hours, 5 revision rounds</div>
+                            </td>
+                            <td class="item-price">$3,500.00</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="item-title">Social Media Content Package</div>
+                                <div class="item-desc">10 short-form videos for Instagram/TikTok</div>
+                            </td>
+                            <td class="item-price">$2,200.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <div class="totals-section">
+                <div class="totals-table">
+                    <div class="total-row">
+                        <span>SUBTOTAL</span>
+                        <span>$10,700.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>TAX (16%)</span>
+                        <span>$1,712.00</span>
+                    </div>
+                    <div class="total-row final">
+                        <span>TOTAL</span>
+                        <span class="amount">$12,412.00</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="divider"></div>
+        <div class="bottom-section">
+            <section class="payment-info">
+                <span class="label">Payment Information</span>
+                <div class="bank-details">
+                    <p>
+                        <strong>Bank Transfer (USD)</strong><br>
+                        Bank Name: Chase Bank<br>
+                        Account Name: Nairoreel Productions<br>
+                        Account Number: 123456789<br>
+                        Routing Number: 987654321<br>
+                        SWIFT Code: CHASUS33
+                    </p>
+                </div>
+                <p class="payment-note">* Please include invoice number in payment reference.</p>
+            </section>
 
-        <!-- Billing Information -->
-        <div class="billing-section">
-            <h3>BILLED TO:</h3>
-            <p class="client-name">Studio Shodwe</p>
-            <p class="client-address">123 Anywhere St., Any City</p>
-            <p class="client-email">hello@reallygreatsite.com</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Invoice Table -->
-        <div class="invoice-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="desc-column">DESCRIPTION</th>
-                        <th class="amount-column">AMOUNT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="desc-column">Corporate Video Production<br><span class="item-detail">3D Animation and Post-Production</span></td>
-                        <td class="amount-column">$5,000.00</td>
-                    </tr>
-                    <tr>
-                        <td class="desc-column">3D Product Rendering<br><span class="item-detail">40 render hours, 5 revision rounds</span></td>
-                        <td class="amount-column">$3,500.00</td>
-                    </tr>
-                    <tr>
-                        <td class="desc-column">Social Media Content Package<br><span class="item-detail">10 short-form videos for Instagram/TikTok</span></td>
-                        <td class="amount-column">$2,200.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Totals Section -->
-        <div class="totals-section">
-            <div class="total-row">
-                <span class="total-label">Subtotal</span>
-                <span class="total-value">$10,700.00</span>
-            </div>
-            <div class="total-row">
-                <span class="total-label">Tax (16%)</span>
-                <span class="total-value">$1,712.00</span>
-            </div>
-            <div class="total-row final-total">
-                <span class="total-label">TOTAL</span>
-                <span class="total-value">$12,412.00</span>
-            </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Payment Details -->
-        <div class="payment-section">
-            <h3>PAYMENT DETAILS</h3>
-            <div class="payment-info">
-                <p class="payment-method">Bank Transfer (USD)</p>
-                <p class="payment-detail">Bank Name: Chase Bank</p>
-                <p class="payment-detail">Account Name: Nairoreel Productions LLC</p>
-                <p class="payment-detail">Account Number: 123456789</p>
-                <p class="payment-detail">Routing Number: 987654321</p>
-                <p class="payment-detail">SWIFT Code: CHASUS33</p>
-            </div>
-            <p class="payment-note">* Alternative payment methods available upon request. We can provide an updated invoice with additional payment options.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Footer -->
-        <div class="footer-section">
-            <p class="thank-you">Thank you for choosing Nairoreel Productions.</p>
-            <p class="contact-info">sales@nairoreelproductions.com</p>
+            <footer class="footer">
+                <div class="thank-you">Thank you for choosing Nairoreel Productions.</div>
+                <div class="footer-contact">sales@nairoreelproductions.com</div>
+            </footer>
         </div>
     </div>
+
 </body>
 </html>
